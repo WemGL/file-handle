@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wembleyleach.filehandle.FileHandleController">
+   <top>
+      <MenuBar fx:id="menuBar" BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#addFiles" text="Add files…" />
+              <MenuItem mnemonicParsing="false" onAction="#closeApp" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <VBox alignment="CENTER" minHeight="-Infinity" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <GridPane minHeight="-Infinity" VBox.vgrow="NEVER">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="410.0" minWidth="10.0" prefWidth="410.0" />
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="0.0" prefWidth="0.0" />
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="0.0" prefWidth="0.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Button fx:id="cancel" cancelButton="true" mnemonicParsing="false" prefWidth="66.0" text="Cancel" GridPane.columnIndex="1" />
+                  <Button fx:id="rename" defaultButton="true" disable="true" mnemonicParsing="false" prefHeight="27.0" prefWidth="70.0" text="Rename" GridPane.columnIndex="2" />
+                  <ComboBox fx:id="renameOptions" prefWidth="150.0" promptText="Rename by" />
+               </children>
+            </GridPane>
+            <Group fx:id="replaceGroup">
+               <children>
+                  <GridPane alignment="CENTER_LEFT" hgap="5.0" minHeight="-Infinity" prefWidth="600.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="45.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label text="Find:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" text="Replace with:" GridPane.columnIndex="2">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <padding>
+                              <Insets left="15.0" />
+                           </padding>
+                        </Label>
+                        <TextField fx:id="findText" onKeyReleased="#livePreviewFileRename" prefWidth="182.0" GridPane.columnIndex="1" />
+                        <TextField fx:id="replaceText" onKeyReleased="#livePreviewFileRename" GridPane.columnIndex="3" />
+                     </children>
+                  </GridPane>
+               </children>
+            </Group>
+            <Group fx:id="addGroup">
+               <children>
+                  <GridPane alignment="CENTER_LEFT" hgap="5.0" minHeight="-Infinity" prefWidth="600.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="410.0" minWidth="10.0" prefWidth="382.0" />
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="276.0" minWidth="10.0" prefWidth="182.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <TextField fx:id="addText" onKeyReleased="#livePreviewFileRename" prefWidth="182.0" />
+                        <ComboBox fx:id="nameLocationOptions" prefWidth="175.0" promptText="Place text" GridPane.columnIndex="1" />
+                     </children>
+                  </GridPane>
+               </children>
+            </Group>
+            <Group fx:id="formatGroup">
+               <children>
+                  <GridPane hgap="5.0" minHeight="-Infinity" prefWidth="600.0" vgap="5.0">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="133.0" minWidth="10.0" prefWidth="102.0" />
+                        <ColumnConstraints fillWidth="false" maxWidth="192.0" minWidth="10.0" prefWidth="181.0" />
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="137.0" minWidth="10.0" prefWidth="110.0" />
+                        <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="147.0" minWidth="10.0" prefWidth="146.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label text="Name format:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Custom format:" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Where:" GridPane.columnIndex="2">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Start at:" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="nameFormatOptions" prefHeight="27.0" prefWidth="167.0" promptText="Format" GridPane.columnIndex="1" />
+                        <ComboBox fx:id="formatNameLocationOptions" prefWidth="167.0" promptText="Place text" GridPane.columnIndex="3" />
+                        <TextField fx:id="customFormat" prefHeight="27.0" prefWidth="167.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="startAt" prefHeight="27.0" prefWidth="167.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+               </children>
+            </Group>
+            <HBox minHeight="-Infinity" prefHeight="192.0" prefWidth="600.0" spacing="5.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label prefHeight="23.0" text="Original filename(s)" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                        <ListView fx:id="fileNames" prefHeight="200.0" prefWidth="200.0" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="New filename(s)" VBox.vgrow="SOMETIMES">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                        <ListView fx:id="newFileNames" prefHeight="200.0" prefWidth="200.0" />
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="10.0" />
+         </padding>
+      </VBox>
+   </center>
+</BorderPane>
