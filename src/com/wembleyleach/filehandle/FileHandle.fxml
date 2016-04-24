@@ -157,7 +157,7 @@
                               <Insets />
                            </VBox.margin>
                         </Label>
-                        <ListView fx:id="fileNames" prefHeight="200.0" prefWidth="200.0" />
+                        <ListView fx:id="baseNames" prefHeight="200.0" prefWidth="200.0" />
                      </children>
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
@@ -170,7 +170,7 @@
                               <Insets />
                            </VBox.margin>
                         </Label>
-                        <ListView fx:id="newFileNames" prefHeight="200.0" prefWidth="200.0" />
+                        <ListView fx:id="newBaseNames" prefHeight="200.0" prefWidth="200.0" />
                      </children>
                   </VBox>
                </children>

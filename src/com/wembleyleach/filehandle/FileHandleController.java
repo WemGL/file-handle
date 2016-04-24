@@ -16,6 +16,8 @@ import java.nio.file.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+// TODO: Refactor to make code DRY
+// TODO: Extract strings into constants
 public class FileHandleController implements Initializable {
 
     @FXML
@@ -55,10 +57,10 @@ public class FileHandleController implements Initializable {
     private TextField startAt;
 
     @FXML
-    private ListView<String> fileNames = new ListView<>();
+    private ListView<String> baseNames = new ListView<>();
 
     @FXML
-    private ListView<String> newFileNames = new ListView<>();
+    private ListView<String> newBaseNames = new ListView<>();
 
     private List<File> files;
 
@@ -76,15 +78,20 @@ public class FileHandleController implements Initializable {
     private RenameOption currentReplaceOption;
     private NameLocation currentAddNameLocationOption;
 
+    private final FileChooser fileChooser = new FileChooser();
+    private final static String USER_DIRECTORY = System.getProperty("user.home");
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        fileChooser.setInitialDirectory(new File(USER_DIRECTORY));
+        currentReplaceOption = RenameOption.REPLACE;
+
         initAlert();
         initMenuBar();
         initRenameOptions();
         initRenameButton();
         initNameLocations();
         initFormatOptions();
-        currentReplaceOption = RenameOption.REPLACE;
         showGroup(replaceGroup);
     }
 
@@ -98,30 +105,32 @@ public class FileHandleController implements Initializable {
 
     private void initRenameOptions() {
         renameOptions.getItems().addAll(RenameOption.values());
-        renameOptions.setTooltip(new Tooltip("Select an option to rename your originalFiles"));
-        renameOptions.setOnAction(event -> {
-            RenameOption option = RenameOption.values()[renameOptions.getSelectionModel().getSelectedIndex()];
+        renameOptions.setTooltip(new Tooltip("Select an option to rename your files"));
+        renameOptions.setOnAction(this::renameOptionsAction);
+    }
 
-            switch (option) {
-                case REPLACE:
-                    showGroup(replaceGroup);
-                    updateRenameAction(this::replaceFileNames);
-                    break;
-                case ADD:
-                    showGroup(addGroup);
-                    updateRenameAction(this::addToFileNames);
-                    break;
-                case FORMAT:
-                    showGroup(formatGroup);
-                    updateRenameAction(this::formatFileNames);
-                    break;
-                default:
-                    break;
-            }
+    private void renameOptionsAction(ActionEvent actionEvent) {
+        RenameOption option = RenameOption.values()[renameOptions.getSelectionModel().getSelectedIndex()];
 
-            currentReplaceOption = option;
-            getStage().sizeToScene();
-        });
+        switch (option) {
+            case REPLACE:
+                showGroup(replaceGroup);
+                updateRenameAction(this::replaceBaseNames);
+                break;
+            case ADD:
+                showGroup(addGroup);
+                updateRenameAction(this::addToBaseNames);
+                break;
+            case FORMAT:
+                showGroup(formatGroup);
+                updateRenameAction(this::formatBaseNames);
+                break;
+            default:
+                break;
+        }
+
+        currentReplaceOption = option;
+        getStage().sizeToScene();
     }
 
     private void showGroup(Group group) {
@@ -144,12 +153,7 @@ public class FileHandleController implements Initializable {
         rename.setOnAction(event);
     }
 
-    private void replaceFileNames(ActionEvent event) {
-        if(files == null || files.size() == 0 || fileNames == null || fileNames.getItems().size() == 0) {
-            showAlertWithMessage("You haven't added any files to rename yet.");
-            return;
-        }
-
+    private void replaceBaseNames(ActionEvent event) {
         performFileRename();
     }
 
@@ -165,7 +169,7 @@ public class FileHandleController implements Initializable {
         for(int i = 0; i < files.size(); i++) {
             try {
                 Path oldFilePath = files.get(i).toPath();
-                Path movedFile = Files.move(oldFilePath, oldFilePath.resolveSibling(newFileNames.getItems().get(i)));
+                Path movedFile = Files.move(oldFilePath, oldFilePath.resolveSibling(newBaseNames.getItems().get(i)));
                 movedFiles.add(movedFile.toFile());
 
             } catch (IOException e) {
@@ -173,22 +177,15 @@ public class FileHandleController implements Initializable {
             }
         }
 
-        fileNames.getItems().setAll(newFileNames.getItems());
+        baseNames.getItems().setAll(newBaseNames.getItems());
         files = movedFiles;
     }
 
-    private void addToFileNames(ActionEvent event) {
-        System.out.println("Current add option: " + currentAddNameLocationOption);
-        if(files == null || files.size() == 0 || fileNames == null || fileNames.getItems().size() == 0) {
-            showAlertWithMessage("You haven't added any files to rename yet.");
-            return;
-        } else if(currentAddNameLocationOption == null) {
-            showAlertWithMessage("You haven't chosen the location to add your new text yet.");
-            return;
-        }
+    private void addToBaseNames(ActionEvent event) {
+        performFileRename();
     }
 
-    private void formatFileNames(ActionEvent event) {
+    private void formatBaseNames(ActionEvent event) {
         System.out.println("Format file names called");
     }
 
@@ -221,15 +218,20 @@ public class FileHandleController implements Initializable {
     }
 
     private void performRenameLivePreview() {
-        newFileNames.getItems().setAll(fileNames.getItems());
+        if(files == null || files.size() == 0 || baseNames == null || baseNames.getItems().size() == 0) {
+            showAlertWithMessage("You haven't added any files to rename yet.");
+            return;
+        }
 
-        List<String> renamedFiles = newFileNames.getItems().stream()
+        newBaseNames.getItems().setAll(baseNames.getItems());
+
+        List<String> renamedFiles = newBaseNames.getItems().stream()
                 .filter(fileName -> fileName.contains(findText.getText()))
                 .map(fileName -> fileName.replaceAll(findText.getText(), replaceText.getText()))
                 .collect(Collectors.toList());
 
         if(renamedFiles.size() > 0)
-            newFileNames.getItems().setAll(renamedFiles);
+            newBaseNames.getItems().setAll(renamedFiles);
     }
 
     public void livePreviewFileRename(KeyEvent event) {
@@ -257,41 +259,61 @@ public class FileHandleController implements Initializable {
     }
 
     private void performAddTextLivePreview() {
-        if(currentAddNameLocationOption == null) {
+        if(files == null || files.size() == 0 || baseNames == null || baseNames.getItems().size() == 0) {
+            showAlertWithMessage("You haven't added any files to rename yet.");
+            return;
+        } else if(currentAddNameLocationOption == null) {
             showAlertWithMessage("You haven't chosen the location to add your new text yet.");
             return;
         }
 
-        newFileNames.getItems().setAll(fileNames.getItems());
+        newBaseNames.getItems().setAll(baseNames.getItems());
 
-        List<String> renamedFiles;
-        if(currentAddNameLocationOption.compareTo(NameLocation.AFTER) == 0) {
-            renamedFiles = newFileNames.getItems().stream()
-                    .map(fileName -> StringUtils.appendIfMissing(addText.getText(), fileName))
-                    .collect(Collectors.toList());
-        } else {
-            renamedFiles = newFileNames.getItems().stream()
-                    .map(fileName -> StringUtils.prependIfMissing(addText.getText(), fileName))
-                    .collect(Collectors.toList());
-        }
+        List<String> renamedFiles = findCurrentAddNameLocationAndProcessFiles();
 
         if(renamedFiles.size() > 0)
-            newFileNames.getItems().setAll(renamedFiles);
+            newBaseNames.getItems().setAll(renamedFiles);
 
     }
 
+    // TODO: Remove the duplication in these three methods
+    private List<String> findCurrentAddNameLocationAndProcessFiles() {
+        List<String> renamedFiles;
+        if(currentAddNameLocationOption.compareTo(NameLocation.AFTER) == 0) {
+            renamedFiles = newBaseNames.getItems().stream()
+                    .map(this::prependAdditionalText)
+                    .collect(Collectors.toList());
+        } else {
+            renamedFiles = newBaseNames.getItems().stream()
+                    .map(this::appendAdditionalText)
+                    .collect(Collectors.toList());
+        }
+        return renamedFiles;
+    }
+
+    private String appendAdditionalText(String baseName) {
+        String[] parts = baseName.split("\\.(?=[^\\.]+$)");
+        String fileName = parts[0];
+        parts[0] = StringUtils.appendIfMissing(addText.getText(), fileName);
+        return StringUtils.join(parts, ".");
+    }
+
+    private  String prependAdditionalText(String baseName) {
+        String[] parts = baseName.split("\\.(?=[^\\.]+$)");
+        String fileName = parts[0];
+        parts[0] = StringUtils.prependIfMissing(addText.getText(), fileName);
+        return StringUtils.join(parts, ".");
+    }
+
     public void addFiles(ActionEvent actionEvent) {
-        FileChooser fileChooser = new FileChooser();
-        String userDirectory = System.getProperty("user.home");
-        fileChooser.setInitialDirectory(new File(userDirectory));
         files = fileChooser.showOpenMultipleDialog(null);
         if(files != null) {
-            List<String> rawFileNames = files.stream()
+            List<String> rawBaseNames = files.stream()
                     .map(File::getName)
                     .collect(Collectors.toList());
 
-            fileNames.getItems().setAll(rawFileNames);
-            newFileNames.getItems().setAll(rawFileNames);
+            baseNames.getItems().setAll(rawBaseNames);
+            newBaseNames.getItems().setAll(rawBaseNames);
         } else {
             showAlertWithMessage("There was an issue selecting your files. Please try again.");
         }
@@ -301,7 +323,5 @@ public class FileHandleController implements Initializable {
         Platform.exit();
         System.exit(0);
     }
-
-
 
 }
