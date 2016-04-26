@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
 
 // TODO: Refactor to make code DRY
 // TODO: Extract strings into constants
+// TODO: Turn all setOnActions into separate methods and pass them to their
+//       respective lambdas
 public class FileHandleController implements Initializable {
 
     @FXML
@@ -76,7 +78,9 @@ public class FileHandleController implements Initializable {
     private Stage primaryStage;
     private Alert alert;
     private RenameOption currentReplaceOption;
-    private NameLocation currentAddNameLocationOption;
+    private NameLocation currentAddTextNameLocationOption;
+    private NameFormat currentNameFormatOption;
+    private NameLocation currentNameFormatLocationOption;
 
     private final FileChooser fileChooser = new FileChooser();
     private final static String USER_DIRECTORY = System.getProperty("user.home");
@@ -186,7 +190,7 @@ public class FileHandleController implements Initializable {
     }
 
     private void formatBaseNames(ActionEvent event) {
-        System.out.println("Format file names called");
+        performFileRename();
     }
 
     private Stage getStage() {
@@ -206,15 +210,22 @@ public class FileHandleController implements Initializable {
         nameLocationOptions.getItems().addAll(NameLocation.values());
         nameLocationOptions.setTooltip(new Tooltip("Select where your text should be applied."));
         nameLocationOptions.setOnAction(event -> {
-            currentAddNameLocationOption = NameLocation.values()[nameLocationOptions.getSelectionModel().getSelectedIndex()];
+            currentAddTextNameLocationOption = NameLocation.values()[nameLocationOptions.getSelectionModel().getSelectedIndex()];
         });
     }
 
     private void initFormatOptions() {
         nameFormatOptions.getItems().addAll(NameFormat.values());
         nameFormatOptions.setTooltip(new Tooltip("Select a format to use when renaming your files."));
+        nameFormatOptions.setOnAction(event -> {
+            currentNameFormatOption = NameFormat.values()[nameFormatOptions.getSelectionModel().getSelectedIndex()];
+        });
+
         formatNameLocationOptions.getItems().addAll(NameLocation.values());
         formatNameLocationOptions.setTooltip(new Tooltip("Select where your text should be applied."));
+        formatNameLocationOptions.setOnAction(event -> {
+           currentNameFormatLocationOption = NameLocation.values()[formatNameLocationOptions.getSelectionModel().getSelectedIndex()];
+        });
     }
 
     private void performRenameLivePreview() {
@@ -256,13 +267,23 @@ public class FileHandleController implements Initializable {
 
     private void performFormatLivePreview() {
         System.out.println("Performing format live preview.");
+        if(files == null || files.size() == 0 || baseNames == null || baseNames.getItems().size() == 0) {
+            showAlertWithMessage("You haven't added any files to rename yet.");
+            return;
+        } else if (currentNameFormatOption == null) {
+            showAlertWithMessage("You haven't chosen a format for your new custom file name.");
+            return;
+        } else if(currentNameFormatLocationOption == null) {
+            showAlertWithMessage("You haven't chosen the location to add your new text yet.");
+            return;
+        }
     }
 
     private void performAddTextLivePreview() {
         if(files == null || files.size() == 0 || baseNames == null || baseNames.getItems().size() == 0) {
             showAlertWithMessage("You haven't added any files to rename yet.");
             return;
-        } else if(currentAddNameLocationOption == null) {
+        } else if(currentAddTextNameLocationOption == null) {
             showAlertWithMessage("You haven't chosen the location to add your new text yet.");
             return;
         }
@@ -279,7 +300,7 @@ public class FileHandleController implements Initializable {
     // TODO: Remove the duplication in these three methods
     private List<String> findCurrentAddNameLocationAndProcessFiles() {
         List<String> renamedFiles;
-        if(currentAddNameLocationOption.compareTo(NameLocation.AFTER) == 0) {
+        if(currentAddTextNameLocationOption.compareTo(NameLocation.AFTER) == 0) {
             renamedFiles = newBaseNames.getItems().stream()
                     .map(this::prependAdditionalText)
                     .collect(Collectors.toList());

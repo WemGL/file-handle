@@ -139,8 +139,8 @@
                         </Label>
                         <ComboBox fx:id="nameFormatOptions" prefHeight="27.0" prefWidth="167.0" promptText="Format" GridPane.columnIndex="1" />
                         <ComboBox fx:id="formatNameLocationOptions" prefWidth="167.0" promptText="Place text" GridPane.columnIndex="3" />
-                        <TextField fx:id="customFormat" prefHeight="27.0" prefWidth="167.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="startAt" prefHeight="27.0" prefWidth="167.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <TextField fx:id="customFormat" onKeyReleased="#livePreviewFileRename" prefHeight="27.0" prefWidth="167.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="startAt" onKeyReleased="#livePreviewFileRename" prefHeight="27.0" prefWidth="167.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </children>
