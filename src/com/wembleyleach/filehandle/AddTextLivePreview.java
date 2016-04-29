@@ -37,30 +37,19 @@ public class AddTextLivePreview implements LivePreviewBehavior {
     }
 
     private List<String> findCurrentAddNameLocationAndProcessFiles() {
-        List<String> renamedFiles;
-        if(fileHandleController.getCurrentAddTextNameLocationOption().compareTo(NameLocation.AFTER) == 0) {
-            renamedFiles = fileHandleController.getNewBaseNames().getItems().stream()
-                    .map(this::prependAdditionalText)
-                    .collect(Collectors.toList());
-        } else {
-            renamedFiles = fileHandleController.getNewBaseNames().getItems().stream()
-                    .map(this::appendAdditionalText)
-                    .collect(Collectors.toList());
-        }
-        return renamedFiles;
+        return fileHandleController.getNewBaseNames().getItems().stream()
+                .map(this::addTextToNewBaseName)
+                .collect(Collectors.toList());
     }
 
-    private String appendAdditionalText(String baseName) {
+    private  String addTextToNewBaseName(String baseName) {
         String[] parts = baseName.split(LAST_PERIOD_LOOKAHEAD_REGEX);
         String fileName = parts[0];
-        parts[0] = StringUtils.appendIfMissing(fileHandleController.getAddText().getText(), fileName);
-        return StringUtils.join(parts, ".");
-    }
+        if(fileHandleController.getCurrentAddTextNameLocationOption().compareTo(NameLocation.AFTER) == 0)
+            parts[0] = StringUtils.prependIfMissing(fileHandleController.getAddText().getText(), fileName);
+        else
+            parts[0] = StringUtils.appendIfMissing(fileHandleController.getAddText().getText(), fileName);
 
-    private  String prependAdditionalText(String baseName) {
-        String[] parts = baseName.split(LAST_PERIOD_LOOKAHEAD_REGEX);
-        String fileName = parts[0];
-        parts[0] = StringUtils.prependIfMissing(fileHandleController.getAddText().getText(), fileName);
         return StringUtils.join(parts, ".");
     }
 

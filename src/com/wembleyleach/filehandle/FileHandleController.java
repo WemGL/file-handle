@@ -15,10 +15,6 @@ import java.nio.file.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-// TODO: Refactor to make code DRY
-// TODO: Extract strings into constants
-// TODO: Turn all setOnActions into separate methods and pass them to their
-//       respective lambdas
 public class FileHandleController implements Initializable {
 
     @FXML
@@ -232,15 +228,19 @@ public class FileHandleController implements Initializable {
     private void initFormatOptions() {
         nameFormatOptions.getItems().addAll(NameFormat.values());
         nameFormatOptions.setTooltip(new Tooltip("Select a format to use when renaming your files."));
-        nameFormatOptions.setOnAction(event -> {
-            currentNameFormatOption = NameFormat.values()[nameFormatOptions.getSelectionModel().getSelectedIndex()];
-        });
+        nameFormatOptions.setOnAction(this::updateCurrentNameFormatOption);
 
         formatNameLocationOptions.getItems().addAll(NameLocation.values());
         formatNameLocationOptions.setTooltip(new Tooltip("Select where your text should be applied."));
-        formatNameLocationOptions.setOnAction(event -> {
-           currentNameFormatLocationOption = NameLocation.values()[formatNameLocationOptions.getSelectionModel().getSelectedIndex()];
-        });
+        formatNameLocationOptions.setOnAction(this::updateCurrentNameFormatLocationOption);
+    }
+
+    private void updateCurrentNameFormatOption(ActionEvent actionEvent) {
+        currentNameFormatOption = NameFormat.values()[nameFormatOptions.getSelectionModel().getSelectedIndex()];
+    }
+
+    private void updateCurrentNameFormatLocationOption(ActionEvent actionEvent) {
+        currentNameFormatLocationOption = NameLocation.values()[formatNameLocationOptions.getSelectionModel().getSelectedIndex()];
     }
 
     public void livePreviewFileRename(KeyEvent event) {
