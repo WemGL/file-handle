@@ -159,7 +159,7 @@
                            </font>
                         </Label>
                         <ComboBox fx:id="nameFormatOptions" promptText="Format" GridPane.columnIndex="1" GridPane.hgrow="NEVER" />
-                        <ComboBox fx:id="formatNameLocationOptions" promptText="Place text" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.hgrow="NEVER" />
+                        <ComboBox fx:id="formatNameLocationOptions" promptText="Place text" GridPane.columnIndex="4" GridPane.hgrow="NEVER" />
                         <TextField fx:id="customFormat" onKeyReleased="#livePreviewFileRename" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="NEVER" GridPane.rowIndex="1" />
                         <TextField fx:id="startAt" onKeyReleased="#livePreviewFileRename" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.hgrow="NEVER" GridPane.rowIndex="1" />
                      </children>
@@ -169,7 +169,7 @@
                   </GridPane>
                </children>
             </Group>
-            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="600.0" spacing="2.5" VBox.vgrow="NEVER">
+            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="600.0" spacing="5.0" VBox.vgrow="NEVER">
                <children>
                   <VBox styleClass="text-field__list-heading" HBox.hgrow="ALWAYS">
                      <children>
