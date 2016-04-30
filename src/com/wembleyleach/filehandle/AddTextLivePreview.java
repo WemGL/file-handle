@@ -42,7 +42,7 @@ public class AddTextLivePreview implements LivePreviewBehavior {
                 .collect(Collectors.toList());
     }
 
-    private  String addTextToNewBaseName(String baseName) {
+    private String addTextToNewBaseName(String baseName) {
         String[] parts = baseName.split(LAST_PERIOD_LOOKAHEAD_REGEX);
         String fileName = parts[0];
         if(fileHandleController.getCurrentAddTextNameLocationOption().compareTo(NameLocation.AFTER) == 0)
