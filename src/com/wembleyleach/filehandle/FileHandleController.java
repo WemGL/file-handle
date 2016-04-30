@@ -112,6 +112,7 @@ public class FileHandleController implements Initializable {
         renameOptions.getItems().addAll(RenameOption.values());
         renameOptions.setTooltip(new Tooltip("Select an option to rename your files"));
         renameOptions.setOnAction(this::renameOptionsAction);
+        renameOptions.getSelectionModel().select(RenameOption.REPLACE);
     }
 
     private void renameOptionsAction(ActionEvent actionEvent) {

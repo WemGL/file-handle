@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.wembleyleach.filehandle.enums.NameFormat.*;
-import static com.wembleyleach.filehandle.enums.NameLocation.*;
 
 public class FormatTextLivePreview implements LivePreviewBehavior {
 
@@ -78,18 +77,39 @@ public class FormatTextLivePreview implements LivePreviewBehavior {
     }
 
     private String performAddIndexOrCounter(String baseName) {
-        String formattedBaseName = "";
-        if(fileHandleController.getCurrentNameFormatOption() == INDEX) {
-            formattedBaseName = Integer.toString(startValue++);
-        } else if(fileHandleController.getCurrentNameFormatOption() == COUNTER) {
-            formattedBaseName = String.format("%05d", startValue++);
+        String formattedIndexOrCounter = formatIndexOrCounter();
+
+        return addFormattedIndexOrCounterToBaseName(baseName, formattedIndexOrCounter);
+    }
+
+    private String formatIndexOrCounter() {
+        String formattedIndexOrCounter = "";
+        switch (fileHandleController.getCurrentNameFormatOption()) {
+            case INDEX:
+                formattedIndexOrCounter = Integer.toString(startValue++);
+                break;
+            case COUNTER:
+                formattedIndexOrCounter = String.format("%05d", startValue++);
+                break;
+            default:
+                break;
         }
 
+        return formattedIndexOrCounter;
+    }
+
+    private String addFormattedIndexOrCounterToBaseName(String baseName, String formattedIndexOrCounter) {
         String[] baseNameParts = baseName.split(LAST_PERIOD_LOOKAHEAD_REGEX);
-        if(fileHandleController.getCurrentNameFormatLocationOption() == AFTER) {
-            baseNameParts[0] = StringUtils.appendIfMissing(baseNameParts[0], formattedBaseName);
-        } else if(fileHandleController.getCurrentNameFormatLocationOption() == BEFORE) {
-            baseNameParts[0] = StringUtils.prependIfMissing(baseNameParts[0], formattedBaseName);
+
+        switch (fileHandleController.getCurrentNameFormatLocationOption()) {
+            case AFTER:
+                baseNameParts[0] = StringUtils.appendIfMissing(baseNameParts[0], formattedIndexOrCounter);
+                break;
+            case BEFORE:
+                baseNameParts[0] = StringUtils.prependIfMissing(baseNameParts[0], formattedIndexOrCounter);
+                break;
+            default:
+                break;
         }
 
         return StringUtils.join(baseNameParts, ".");
@@ -97,10 +117,15 @@ public class FormatTextLivePreview implements LivePreviewBehavior {
 
     private String performAddDate(String newBaseName) {
         String[] baseNameParts = newBaseName.split(LAST_PERIOD_LOOKAHEAD_REGEX);
-        if(fileHandleController.getCurrentNameFormatLocationOption() == AFTER) {
-            baseNameParts[0] = StringUtils.appendIfMissing(baseNameParts[0], String.format("%s %d", dateTime, startValue++));
-        } else {
-            baseNameParts[0] = StringUtils.prependIfMissing(baseNameParts[0], String.format("%s %d", dateTime, startValue++));
+        switch (fileHandleController.getCurrentNameFormatLocationOption()) {
+            case AFTER:
+                baseNameParts[0] = StringUtils.appendIfMissing(baseNameParts[0], String.format("%s (%d)", dateTime, startValue++));
+                break;
+            case BEFORE:
+                baseNameParts[0] = StringUtils.prependIfMissing(baseNameParts[0], String.format("%s (%d)", dateTime, startValue++));
+                break;
+            default:
+                break;
         }
 
         return StringUtils.join(baseNameParts, ".");
