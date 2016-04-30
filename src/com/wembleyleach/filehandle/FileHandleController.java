@@ -83,50 +83,6 @@ public class FileHandleController implements Initializable {
     private LivePreviewBehavior[] livePreviewBehaviors;
     private Group[] optionGroups;
 
-    public List<File> getFiles() {
-        return files;
-    }
-
-    public void setFiles(List<File> files) {
-        this.files = files;
-    }
-
-    public ListView<String> getBaseNames() {
-        return baseNames;
-    }
-
-    public NameLocation getCurrentNameFormatLocationOption() {
-        return currentNameFormatLocationOption;
-    }
-
-    public NameFormat getCurrentNameFormatOption() {
-        return currentNameFormatOption;
-    }
-
-    public NameLocation getCurrentAddTextNameLocationOption() {
-        return currentAddTextNameLocationOption;
-    }
-
-    public ListView<String> getNewBaseNames() {
-        return newBaseNames;
-    }
-
-    public FileChooser getFileChooser() {
-        return fileChooser;
-    }
-
-    public TextField getAddText() {
-        return addText;
-    }
-
-    public TextField getFindText() {
-        return findText;
-    }
-
-    public TextField getReplaceText() {
-        return replaceText;
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         fileChooser.setInitialDirectory(new File(USER_DIRECTORY));
@@ -269,5 +225,56 @@ public class FileHandleController implements Initializable {
         System.exit(0);
     }
 
+    public List<File> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<File> files) {
+        this.files = files;
+    }
+
+    public ListView<String> getBaseNames() {
+        return baseNames;
+    }
+
+    public NameLocation getCurrentNameFormatLocationOption() {
+        return currentNameFormatLocationOption;
+    }
+
+    public NameFormat getCurrentNameFormatOption() {
+        return currentNameFormatOption;
+    }
+
+    public NameLocation getCurrentAddTextNameLocationOption() {
+        return currentAddTextNameLocationOption;
+    }
+
+    public ListView<String> getNewBaseNames() {
+        return newBaseNames;
+    }
+
+    public FileChooser getFileChooser() {
+        return fileChooser;
+    }
+
+    public TextField getAddText() {
+        return addText;
+    }
+
+    public TextField getFindText() {
+        return findText;
+    }
+
+    public TextField getReplaceText() {
+        return replaceText;
+    }
+
+    public TextField getCustomFormat() {
+        return customFormat;
+    }
+
+    public TextField getStartAt() {
+        return startAt;
+    }
 }
 
