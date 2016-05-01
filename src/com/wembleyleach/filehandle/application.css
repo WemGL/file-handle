@@ -1,8 +1,0 @@
-.button,
-.text-field,
-.list-view,
-.combo-box {
-    -fx-background-color: -fx-outer-border, #fff, #fff;
-    -fx-background-insets: 0, 1, 2;
-    -fx-background-radius: 0;
-}
