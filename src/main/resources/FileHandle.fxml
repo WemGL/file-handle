@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wembleyleach.filehandle.FileHandleController">
+   <top>
+      <MenuBar fx:id="menuBar" BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#addFiles" text="Add files…" />
+              <MenuItem mnemonicParsing="false" onAction="#closeApp" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#about" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" spacing="5.0" BorderPane.alignment="CENTER">
+         <children>
+            <GridPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="27.0" VBox.vgrow="NEVER">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" />
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="27.0" vgrow="NEVER" />
+               </rowConstraints>
+               <children>
+                  <Button cancelButton="true" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#cancel" prefHeight="27.0" prefWidth="66.0" text="Cancel" GridPane.columnIndex="4" />
+                  <Button fx:id="rename" defaultButton="true" disable="true" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="27.0" prefWidth="70.0" text="Rename" GridPane.columnIndex="5" />
+                  <ComboBox fx:id="renameOptions" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="27.0" promptText="Rename by" />
+               </children>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </GridPane>
+            <Group fx:id="replaceGroup" VBox.vgrow="NEVER">
+               <children>
+                  <GridPane alignment="CENTER_LEFT" hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="27.0" prefWidth="600.0">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="27.0" vgrow="NEVER" />
+                     </rowConstraints>
+                     <children>
+                        <Label maxHeight="-Infinity" minHeight="-Infinity" prefHeight="27.0" text="Find:" GridPane.hgrow="NEVER">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="27.0" text="Replace with:" GridPane.columnIndex="3" GridPane.hgrow="NEVER">
+                           <padding>
+                              <Insets left="15.0" />
+                           </padding>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="findText" maxHeight="-Infinity" minHeight="-Infinity" onKeyReleased="#livePreviewFileRename" pickOnBounds="false" prefHeight="27.0" GridPane.columnIndex="1" GridPane.columnSpan="2" />
+                        <TextField fx:id="replaceText" maxHeight="-Infinity" minHeight="-Infinity" onKeyReleased="#livePreviewFileRename" prefHeight="27.0" GridPane.columnIndex="4" GridPane.columnSpan="2" />
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </GridPane>
+               </children>
+            </Group>
+            <Group fx:id="addGroup" VBox.vgrow="NEVER">
+               <children>
+                  <GridPane alignment="CENTER_LEFT" hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="600.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="27.0" vgrow="NEVER" />
+                     </rowConstraints>
+                     <children>
+                        <TextField fx:id="addText" maxHeight="-Infinity" minHeight="-Infinity" onKeyReleased="#livePreviewFileRename" prefHeight="27.0" GridPane.columnSpan="5" GridPane.hgrow="NEVER" />
+                        <ComboBox fx:id="nameLocationOptions" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="27.0" promptText="Place text" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.hgrow="NEVER" />
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </GridPane>
+               </children>
+            </Group>
+            <Group fx:id="formatGroup" VBox.vgrow="NEVER">
+               <children>
+                  <GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="600.0" vgap="5.0">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="27.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="27.0" vgrow="NEVER" />
+                     </rowConstraints>
+                     <children>
+                        <Label maxHeight="-Infinity" minHeight="-Infinity" prefHeight="27.0" text="Name format:" GridPane.hgrow="NEVER">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label maxHeight="-Infinity" minHeight="-Infinity" prefHeight="27.0" text="Custom format:" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label maxHeight="-Infinity" minHeight="-Infinity" prefHeight="27.0" text="Where:" GridPane.columnIndex="3" GridPane.hgrow="NEVER">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label maxHeight="-Infinity" minHeight="-Infinity" prefHeight="27.0" text="Start at:" GridPane.columnIndex="3" GridPane.hgrow="NEVER" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="nameFormatOptions" promptText="Format" GridPane.columnIndex="1" GridPane.hgrow="NEVER" />
+                        <ComboBox fx:id="formatNameLocationOptions" promptText="Place text" GridPane.columnIndex="4" GridPane.hgrow="NEVER" />
+                        <TextField fx:id="customFormat" onKeyReleased="#livePreviewFileRename" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="NEVER" GridPane.rowIndex="1" />
+                        <TextField fx:id="startAt" onKeyReleased="#livePreviewFileRename" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.hgrow="NEVER" GridPane.rowIndex="1" />
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </GridPane>
+               </children>
+            </Group>
+            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="600.0" spacing="5.0" VBox.vgrow="NEVER">
+               <children>
+                  <VBox styleClass="text-field__list-heading" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" text="Original filename(s)">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                        <ListView fx:id="baseNames" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="175.0" />
+                     </children>
+                  </VBox>
+                  <VBox HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" text="New filename(s)">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                        <ListView fx:id="newBaseNames" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="175.0" />
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="5.0" top="5.0" />
+         </padding>
+      </VBox>
+   </center>
+</BorderPane>
