@@ -13,6 +13,6 @@ public class AboutController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        logo.setImage(new Image("/thirds-logo.png"));
+        logo.setImage(new Image("/file-handle-logo.png"));
     }
 }
