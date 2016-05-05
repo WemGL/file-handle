@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<installer-gui-script minSpecVersion="1">
+<title>File Handle</title>
+<background file="File Handle-background.png" mime-type="image/png" alignment="bottomleft"  scaling="none"/>
+<pkg-ref id="file-handle"/>
+<options customize="never" require-scripts="false"/>
+<choices-outline>
+    <line choice="default">
+        <line choice="file-handle"/>
+    </line>
+</choices-outline>
+<choice id="default"/>
+<choice id="file-handle" visible="false">
+    <pkg-ref id="file-handle"/>
+</choice>
+<pkg-ref id="file-handle" version="1.0" onConclusion="none">FileHandle-app.pkg</pkg-ref>
+</installer-gui-script>
