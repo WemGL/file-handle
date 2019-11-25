@@ -7,7 +7,7 @@ public class ReplaceTextLivePreview implements LivePreviewBehavior {
 
     private final FileHandleController fileHandleController;
 
-    public ReplaceTextLivePreview(FileHandleController fileHandleController) {
+    ReplaceTextLivePreview(FileHandleController fileHandleController) {
         this.fileHandleController = fileHandleController;
     }
 

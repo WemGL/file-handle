@@ -18,7 +18,7 @@ public class FormatTextLivePreview implements LivePreviewBehavior {
     private String dateTime = "";
 
 
-    public FormatTextLivePreview(FileHandleController fileHandleController) {
+    FormatTextLivePreview(FileHandleController fileHandleController) {
         this.fileHandleController = fileHandleController;
     }
 

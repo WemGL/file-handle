@@ -13,7 +13,7 @@ public class AddTextLivePreview implements LivePreviewBehavior {
     private static final String LAST_PERIOD_LOOKAHEAD_REGEX = "\\.(?=[^\\.]+$)";
     private final FileHandleController fileHandleController;
 
-    public AddTextLivePreview(FileHandleController fileHandleController) {
+    AddTextLivePreview(FileHandleController fileHandleController) {
         this.fileHandleController = fileHandleController;
     }
 

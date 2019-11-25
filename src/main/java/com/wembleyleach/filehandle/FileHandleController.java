@@ -1,19 +1,38 @@
 package com.wembleyleach.filehandle;
 
-import com.wembleyleach.filehandle.enums.*;
+import com.wembleyleach.filehandle.enums.NameFormat;
+import com.wembleyleach.filehandle.enums.NameLocation;
+import com.wembleyleach.filehandle.enums.RenameOption;
 import javafx.application.Platform;
-import javafx.event.*;
-import javafx.fxml.*;
-import javafx.scene.*;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.*;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
-import java.nio.file.*;
-import java.util.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public class FileHandleController implements Initializable {
@@ -136,7 +155,7 @@ public class FileHandleController implements Initializable {
         group.setManaged(false);
     }
 
-    public void showAlertWithMessage(String message) {
+    void showAlertWithMessage(String message) {
         alert.setContentText(message);
         alert.showAndWait()
                 .filter(response -> response == ButtonType.OK)
@@ -245,55 +264,55 @@ public class FileHandleController implements Initializable {
             newBaseNames.getItems().setAll(baseNames.getItems());
     }
 
-    public List<File> getFiles() {
+    List<File> getFiles() {
         return files;
     }
 
-    public void setFiles(List<File> files) {
+    void setFiles(List<File> files) {
         this.files = files;
     }
 
-    public ListView<String> getBaseNames() {
+    ListView<String> getBaseNames() {
         return baseNames;
     }
 
-    public NameLocation getCurrentNameFormatLocationOption() {
+    NameLocation getCurrentNameFormatLocationOption() {
         return currentNameFormatLocationOption;
     }
 
-    public NameFormat getCurrentNameFormatOption() {
+    NameFormat getCurrentNameFormatOption() {
         return currentNameFormatOption;
     }
 
-    public NameLocation getCurrentAddTextNameLocationOption() {
+    NameLocation getCurrentAddTextNameLocationOption() {
         return currentAddTextNameLocationOption;
     }
 
-    public ListView<String> getNewBaseNames() {
+    ListView<String> getNewBaseNames() {
         return newBaseNames;
     }
 
-    public FileChooser getFileChooser() {
+    FileChooser getFileChooser() {
         return fileChooser;
     }
 
-    public TextField getAddText() {
+    TextField getAddText() {
         return addText;
     }
 
-    public TextField getFindText() {
+    TextField getFindText() {
         return findText;
     }
 
-    public TextField getReplaceText() {
+    TextField getReplaceText() {
         return replaceText;
     }
 
-    public TextField getCustomFormat() {
+    TextField getCustomFormat() {
         return customFormat;
     }
 
-    public TextField getStartAt() {
+    TextField getStartAt() {
         return startAt;
     }
 }
