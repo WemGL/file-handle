@@ -13,7 +13,7 @@ public class AddTextLivePreview implements LivePreviewBehavior {
     private static final String LAST_PERIOD_LOOKAHEAD_REGEX = "\\.(?=[^\\.]+$)";
     private final FileHandleController fileHandleController;
 
-    AddTextLivePreview(FileHandleController fileHandleController) {
+    public AddTextLivePreview(FileHandleController fileHandleController) {
         this.fileHandleController = fileHandleController;
     }
 
@@ -23,7 +23,7 @@ public class AddTextLivePreview implements LivePreviewBehavior {
             fileHandleController.showAlertWithMessage("You haven't added any files to rename yet.");
             return;
         } else if(fileHandleController.getCurrentAddTextNameLocationOption() == null) {
-            fileHandleController.showAlertWithMessage("You haven't chosen the location to add your new text yet.");
+            fileHandleController.showAlertWithMessage("You haven't selected where to place any text yet.");
             return;
         }
 

@@ -108,8 +108,8 @@ public class FileHandleController implements Initializable {
         livePreviewBehaviors = new LivePreviewBehavior[] { new ReplaceTextLivePreview(this) , new AddTextLivePreview(this) , new FormatTextLivePreview(this) };
         optionGroups = new Group[] { replaceGroup, addGroup, formatGroup };
 
-        initAlert();
         initMenuBar();
+        initAlert();
         initRenameOptions();
         initRenameButton();
         initNameLocations();
@@ -314,6 +314,22 @@ public class FileHandleController implements Initializable {
 
     TextField getStartAt() {
         return startAt;
+    }
+
+    public ComboBox<RenameOption> getRenameOptions() {
+        return renameOptions;
+    }
+
+    public ComboBox<NameLocation> getNameLocationOptions() {
+        return nameLocationOptions;
+    }
+
+    public ComboBox<NameLocation> getFormatNameLocationOptions() {
+        return formatNameLocationOptions;
+    }
+
+    public ComboBox<NameFormat> getNameFormatOptions() {
+        return nameFormatOptions;
     }
 }
 

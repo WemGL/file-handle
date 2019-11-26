@@ -8,4 +8,5 @@ module com.wembleyleach.filehandle {
     // so FXML can access its internals.
     opens com.wembleyleach.filehandle to javafx.fxml;
     exports com.wembleyleach.filehandle;
+    exports com.wembleyleach.filehandle.enums;
 }
